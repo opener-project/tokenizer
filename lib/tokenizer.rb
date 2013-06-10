@@ -1,4 +1,4 @@
-require "opener-tokenizer/version"
+require "tokenizer/version"
 
 module Opener
   module Tokenizer
