@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+require_relative '../lib/opener/tokenizer'
+
+tokenizer = Opener::Tokenizer.new({:args=>ARGV}, STDIN.read)
+
+output = tokenizer.identify
+
+#if process.success?
+  puts output
+
+#   STDERR.puts error unless error.empty?
+# else
+#   abort error
+# end
