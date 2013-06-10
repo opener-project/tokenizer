@@ -1,5 +1,5 @@
 module Opener
-  module Tokenizer
+  class Tokenizer
     VERSION = "0.0.1"
   end
 end
