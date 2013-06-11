@@ -1,6 +1,6 @@
 # Opener::Tokenizer
 
-TODO: Write a gem description
+Gem that wraps up the different existing tokenizers
 
 ## Installation
 
