@@ -20,7 +20,26 @@ module Opener
           
 
 
-          opts.separator ""
+          opts.separator "\n"
+          opts.separator <<-EOF.strip
+
+      Languages that can be tokenized:
+
+        english (en), french (fr), spanish (es), italian (it) german (de) and dutch (nl)
+
+        If you give a KAF file as an input (-k or --kaf) the language is taken from the xml:lang
+        attribute inside the file. Else it expects that you give the language as an argument (-l or --language)
+        
+        Sample KAF syntax:
+        
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <KAF version="v1.opener" xml:lang="en">
+          <raw>
+            This is some text.
+          </raw>
+        </KAF>
+
+          EOF
 
         end.parse!(options_array)
         return options
