@@ -4,7 +4,7 @@ require 'httpclient'
 module Opener
   class Tokenizer
     ##
-    # Language tokenizer server powered by Sinatra.
+    # Text tokenizer server powered by Sinatra.
     #
     class Server < Sinatra::Base
       configure do
@@ -24,7 +24,7 @@ module Opener
       end
 
       ##
-      # Identifies a given text.
+      # Tokenizes a given text.
       #
       # @param [Hash] params The POST parameters.
       #
@@ -59,7 +59,7 @@ module Opener
       def process_sync
         output = tokenize_text(params[:text])
 
-        content_type(:xml) if params[:kaf]
+        content_type(:xml)
 
         body(output)
       rescue => error
@@ -85,7 +85,7 @@ module Opener
       ##
       # @param [String] text The text to tokenize.
       # @return [String]
-      # @raise RuntimeError Raised when the language identification process
+      # @raise RuntimeError Raised when the text tokenization process
       #  failed.
       #
       def tokenize_text(text)
@@ -107,6 +107,7 @@ module Opener
         options = {}
 
         [:kaf, :language, :callback].each do |key|
+          puts params[key]
           options[key] = params[key]
         end
 
@@ -114,7 +115,7 @@ module Opener
       end
 
       ##
-      # Identifies the text and submits it to a callback URL.
+      # Tokenizes the text and submits it to a callback URL.
       #
       # @param [String] text
       # @param [Array] callbacks
@@ -122,7 +123,7 @@ module Opener
       #
       def tokenize_async(text, callbacks, error_callback = nil)
         begin
-          language = tokenize_text(text)
+          kaf = tokenize_text(text)
         rescue => error
           logger.error("Failed to tokenize the text: #{error.message}")
 
@@ -136,7 +137,7 @@ module Opener
         logger.info("Submitting results to #{url}")
 
         begin
-          process_callback(url, language, callbacks)
+          process_callback(url, kaf, callbacks)
         rescue => error
           logger.error("Failed to submit the results: #{error.inspect}")
 
@@ -146,13 +147,13 @@ module Opener
 
       ##
       # @param [String] url
-      # @param [String] language
+      # @param [String] kaf
       # @param [Array] callbacks
       #
-      def process_callback(url, language, callbacks)
+      def process_callback(url, kaf, callbacks)
         HTTPClient.post(
           url,
-          :body => {:language => language, :callbacks => callbacks}
+          :body => {:kaf => kaf, :callbacks => callbacks}
         )
       end
 
@@ -164,5 +165,5 @@ module Opener
         HTTPClient.post(url, :body => {:error => message})
       end
     end # Server
-  end # LanguageIdentifier
+  end # Tokenizer
 end # Opener

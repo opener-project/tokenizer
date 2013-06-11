@@ -11,11 +11,51 @@
 
     <p>
       <pre>tokenizer-server start</pre>
-      <pre>curl -d "text=this is an english text&amp;kaf=true&amp;exteded=true" http://localhost:9393 -XPOST</pre>
+      <pre>curl -d "text=this is an english text&amp;language=en" http://localhost:9393 -XPOST</pre> 
+      
+      outputs:
+      
+      <pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;KAF version=&quot;v1.opener&quot; xml:lang=&quot;en&quot;&gt;
+  &lt;kafHeader&gt;
+    &lt;linguisticProcessors layer=&quot;text&quot;&gt;
+      &lt;lp name=&quot;opennlp-en-tok&quot; timestamp=&quot;2013-06-11T13:29:21Z&quot; version=&quot;1.0&quot;/&gt;
+      &lt;lp name=&quot;opennlp-en-sent&quot; timestamp=&quot;2013-06-11T13:29:22Z&quot; version=&quot;1.0&quot;/&gt;
+    &lt;/linguisticProcessors&gt;
+  &lt;/kafHeader&gt;
+  &lt;text&gt;
+    &lt;wf length=&quot;4&quot; offset=&quot;0&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w1&quot;&gt;this&lt;/wf&gt;
+    &lt;wf length=&quot;2&quot; offset=&quot;5&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w2&quot;&gt;is&lt;/wf&gt;
+    &lt;wf length=&quot;2&quot; offset=&quot;8&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w3&quot;&gt;an&lt;/wf&gt;
+    &lt;wf length=&quot;7&quot; offset=&quot;11&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w4&quot;&gt;english&lt;/wf&gt;
+    &lt;wf length=&quot;4&quot; offset=&quot;19&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w5&quot;&gt;text&lt;/wf&gt;
+  &lt;/text&gt;
+&lt;/KAF&gt;</pre>
+      
+      
+      
+      <pre>curl -d &#39;text=&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;KAF xml:lang=&quot;en&quot;&gt;&lt;raw&gt;this is an english text&lt;/raw&gt;&lt;/KAF&gt;&amp;kaf=true&#39; http://localhost:9292 -XPOST</pre>
 
       outputs:
 
-      <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;KAF xml:lang=&quot;en&quot;&gt;&lt;raw&gt;this is an english text&lt;/raw&gt;&lt;/KAF&gt;</pre>
+      <pre>
+        &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+        &lt;KAF version=&quot;v1.opener&quot; xml:lang=&quot;en&quot;&gt;
+          &lt;kafHeader&gt;
+            &lt;linguisticProcessors layer=&quot;text&quot;&gt;
+              &lt;lp name=&quot;opennlp-en-tok&quot; timestamp=&quot;2013-06-11T13:26:15Z&quot; version=&quot;1.0&quot;/&gt;
+              &lt;lp name=&quot;opennlp-en-sent&quot; timestamp=&quot;2013-06-11T13:26:16Z&quot; version=&quot;1.0&quot;/&gt;
+            &lt;/linguisticProcessors&gt;
+          &lt;/kafHeader&gt;
+          &lt;text&gt;
+            &lt;wf length=&quot;4&quot; offset=&quot;0&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w1&quot;&gt;this&lt;/wf&gt;
+            &lt;wf length=&quot;2&quot; offset=&quot;5&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w2&quot;&gt;is&lt;/wf&gt;
+            &lt;wf length=&quot;2&quot; offset=&quot;8&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w3&quot;&gt;an&lt;/wf&gt;
+            &lt;wf length=&quot;7&quot; offset=&quot;11&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w4&quot;&gt;english&lt;/wf&gt;
+            &lt;wf length=&quot;4&quot; offset=&quot;19&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w5&quot;&gt;text&lt;/wf&gt;
+          &lt;/text&gt;
+        &lt;/KAF&gt;</pre>
     </p>
 
     <h2>Try the webservice</h2>
@@ -52,9 +92,16 @@
 
         <br/>
 
-        <label for="extended">
-          <input type="checkbox" name="extended" id="extended"/>
-          Use the extended language detection list.
+        <label for="language">
+          Choose the language of the text from the list.
+          <select name="language" id="language">
+            <option value="en">English</option>
+            <option value="de">German</option>
+            <option value="nl">Dutch</option>
+            <option value="fr">French</option>
+            <option value="es">Spanish</option>
+            <option value="it">Italian</option>
+          </select>
         </label>
       </div>
 
@@ -66,7 +113,7 @@
     <p>
       <dl>
         <dt>POST /</dt>
-        <dd>Detect the language on the input argument. See arguments listing for more options.</dd>
+        <dd>Tokenize the input text. See arguments listing for more options.</dd>
         <dt>GET /</dt>
         <dd>Show this page</dd>
       </dl>
@@ -81,13 +128,13 @@
       <dt>text*</dt>
       <dd>The input text</dd>
       <dt>kaf [true | false]</dt>
-      <dd>Output a KAF file with the language in the xml:lang attribute and the text in the raw tag</dd>
-      <dt>extended [true | false]</dt>
-      <dd>Use the extended language list instead of the standard languages</dt>
+      <dd>The input is in KAF format.</dd>
+      <dt>language [English | German | Dutch | French | Spanish | Italian]</dt>
+      <dd>The language of the provided text</dt>
       <dt>callbacks</dt>
       <dd>
             You can provide a list of callback urls. If you provide callback urls
-            the language identification will run as a background job and a callback
+            the tokenizer will run as a background job and a callback
             with the results will be performed (POST) to the first url in the callback
             list. The other urls in callback list will be provided in the "callbacks"
             argument.<br/><br/>
