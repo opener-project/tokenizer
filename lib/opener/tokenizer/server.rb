@@ -107,7 +107,6 @@ module Opener
         options = {}
 
         [:kaf, :language, :callback].each do |key|
-          puts params[key]
           options[key] = params[key]
         end
 
