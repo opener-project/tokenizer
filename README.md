@@ -137,4 +137,4 @@ above.
 # What's next? 
 
 If you're interested in the tokenizer, you also might want to check
-out opener-project/tokenizer-base.
+out opener-project/tokenizer.
