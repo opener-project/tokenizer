@@ -1,54 +1,109 @@
-require_relative "tokenizer/version"
-require_relative "tokenizer/option_parser"
-require "opener/tokenizers/base"
-require "opener/tokenizers/fr"
-require "nokogiri"
-require "open3"
+require 'opener/tokenizers/base'
+require 'opener/tokenizers/fr'
+require 'nokogiri'
+require 'open3'
+require 'optparse'
+
+require_relative 'tokenizer/version'
+require_relative 'tokenizer/cli'
 
 module Opener
+  ##
+  # Primary tokenizer class that delegates the work to the various language
+  # specific tokenizers.
+  #
+  # @!attribute [r] options
+  #  @return [Hash]
+  #
   class Tokenizer
-    attr_reader :args
-    attr_accessor :options
-    
-    def initialize(opts={})
-      @args    = opts.delete(:args) || []
-      @options = opts
+    attr_reader :options
+
+    ##
+    # The default language to use when no custom one is specified.
+    #
+    # @return [String]
+    #
+    DEFAULT_LANGUAGE = 'en'.freeze
+
+    ##
+    # Hash containing the default options to use.
+    #
+    # @return [Hash]
+    #
+    DEFAULT_OPTIONS = {
+      :args     => [],
+      :kaf      => false,
+      :language => DEFAULT_LANGUAGE
+    }.freeze
+
+    ##
+    # @param [Hash] options
+    #
+    # @option options [Array] :args Collection of arbitrary arguments to pass
+    #  to the individual tokenizer commands.
+    # @option options [String] :language The language to use for the
+    #  tokenization process.
+    # @option options [TrueClass|FalseClass] :kaf When set to `true` the input
+    #  is assumed to be KAF.
+    #
+    def initialize(options = {})
+      @options = DEFAULT_OPTIONS.merge(options)
     end
-    
-    def options
-      OptionParser.parse(args.dup).merge(@options)
-    end
-    
-    def tokenize(text)
+
+    ##
+    # Processes the input and returns an array containing the output of STDOUT,
+    # STDERR and an object containing process information.
+    #
+    # @param [String] input
+    # @return [Array]
+    #
+    def run(input)
       language = options[:language]
-      
+
       if options[:kaf]
-        language, text = get_kaf_elements(text)
+        language, input = kaf_elements(input)
       end
-      
-      tokenizer = tokenizer_for_language(language)
-      output, error, process = Open3.capture3(tokenizer.command, :stdin_data=>text)
-    end
-    
-    alias :run :tokenize
-    
-    protected
 
-    def tokenizer_for_language(language)
-      Opener::Tokenizers.const_get(language.upcase).new
-    end
-    
-    def get_kaf_elements(text)
-      doc = Nokogiri::XML(text)
-      language = doc.at('KAF').attr('xml:lang')
-      raw_text = doc.at('raw').text
+      unless valid_language?(language)
+        raise ArgumentError, "The specified language (#{language}) is invalid"
+      end
 
-      check_language_support(language)
-      return [language, raw_text]
+      kernel = language_constant(language).new(:args => options[:args])
+
+      return Open3.capture3(kernel.command, :stdin_data => input)
     end
-    
-    def check_language_support(language)
-      OptionParser.check_language!(language)
-    end    
-  end
-end
+
+    alias tokenize run
+
+    private
+
+    ##
+    # Returns an Array containing the language an input from a KAF document.
+    #
+    # @param [String] input The KAF document.
+    # @return [Array]
+    #
+    def kaf_elements(input)
+      document = Nokogiri::XML(input)
+      language = document.at('KAF').attr('xml:lang')
+      text     = document.at('raw').text
+
+      return language, text
+    end
+
+    ##
+    # @param [String] language
+    # @return [Class]
+    #
+    def language_constant(language)
+      Opener::Tokenizers.const_get(language.upcase)
+    end
+
+    ##
+    # @return [TrueClass|FalseClass]
+    #
+    def valid_language?(language)
+      return Opener::Tokenizers.const_defined?(language.upcase)
+    end
+  end # Tokenizer
+end # Opener

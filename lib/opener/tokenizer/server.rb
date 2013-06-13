@@ -29,8 +29,10 @@ module Opener
       # @param [Hash] params The POST parameters.
       #
       # @option params [String] :text The text to tokenize.
-      # @option params [TrueClass|FalseClass] :kaf Whether or not the input is in KAF format.
-      # @option params [String] :language The language of the text. If :kaf option is selected, the language will be taken from the KAF file.
+      # @option params [TrueClass|FalseClass] :kaf Whether or not the input is
+      #  in KAF format.
+      # @option params [String] :language The language of the text. If :kaf
+      #  option is selected, the language will be taken from the KAF file.
       # @option params [Array<String>] :callbacks A collection of callback URLs
       #  that act as a chain. The results are posted to the first URL which is
       #  then shifted of the list.
@@ -106,7 +108,7 @@ module Opener
       def options_from_params
         options = {}
 
-        [:kaf, :language, :callback].each do |key|
+        [:kaf, :language].each do |key|
           options[key] = params[key]
         end
 

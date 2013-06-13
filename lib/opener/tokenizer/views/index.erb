@@ -11,12 +11,11 @@
 
     <p>
       <pre>tokenizer-server start</pre>
-      <pre>curl -d "text=this is an english text&amp;language=en" http://localhost:9393 -XPOST</pre> 
-      
+      <pre>curl -d "text=this is an english text&amp;language=en" http://localhost:9393 -XPOST</pre>
+
       outputs:
-      
-      <pre>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+
+      <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
 &lt;KAF version=&quot;v1.opener&quot; xml:lang=&quot;en&quot;&gt;
   &lt;kafHeader&gt;
     &lt;linguisticProcessors layer=&quot;text&quot;&gt;
@@ -32,30 +31,29 @@
     &lt;wf length=&quot;4&quot; offset=&quot;19&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w5&quot;&gt;text&lt;/wf&gt;
   &lt;/text&gt;
 &lt;/KAF&gt;</pre>
-      
-      
-      
+
+
+
       <pre>curl -d &#39;text=&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;KAF xml:lang=&quot;en&quot;&gt;&lt;raw&gt;this is an english text&lt;/raw&gt;&lt;/KAF&gt;&amp;kaf=true&#39; http://localhost:9292 -XPOST</pre>
 
       outputs:
 
-      <pre>
-        &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
-        &lt;KAF version=&quot;v1.opener&quot; xml:lang=&quot;en&quot;&gt;
-          &lt;kafHeader&gt;
-            &lt;linguisticProcessors layer=&quot;text&quot;&gt;
-              &lt;lp name=&quot;opennlp-en-tok&quot; timestamp=&quot;2013-06-11T13:26:15Z&quot; version=&quot;1.0&quot;/&gt;
-              &lt;lp name=&quot;opennlp-en-sent&quot; timestamp=&quot;2013-06-11T13:26:16Z&quot; version=&quot;1.0&quot;/&gt;
-            &lt;/linguisticProcessors&gt;
-          &lt;/kafHeader&gt;
-          &lt;text&gt;
-            &lt;wf length=&quot;4&quot; offset=&quot;0&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w1&quot;&gt;this&lt;/wf&gt;
-            &lt;wf length=&quot;2&quot; offset=&quot;5&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w2&quot;&gt;is&lt;/wf&gt;
-            &lt;wf length=&quot;2&quot; offset=&quot;8&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w3&quot;&gt;an&lt;/wf&gt;
-            &lt;wf length=&quot;7&quot; offset=&quot;11&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w4&quot;&gt;english&lt;/wf&gt;
-            &lt;wf length=&quot;4&quot; offset=&quot;19&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w5&quot;&gt;text&lt;/wf&gt;
-          &lt;/text&gt;
-        &lt;/KAF&gt;</pre>
+      <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;KAF version=&quot;v1.opener&quot; xml:lang=&quot;en&quot;&gt;
+  &lt;kafHeader&gt;
+    &lt;linguisticProcessors layer=&quot;text&quot;&gt;
+      &lt;lp name=&quot;opennlp-en-tok&quot; timestamp=&quot;2013-06-11T13:26:15Z&quot; version=&quot;1.0&quot;/&gt;
+      &lt;lp name=&quot;opennlp-en-sent&quot; timestamp=&quot;2013-06-11T13:26:16Z&quot; version=&quot;1.0&quot;/&gt;
+    &lt;/linguisticProcessors&gt;
+  &lt;/kafHeader&gt;
+  &lt;text&gt;
+    &lt;wf length=&quot;4&quot; offset=&quot;0&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w1&quot;&gt;this&lt;/wf&gt;
+    &lt;wf length=&quot;2&quot; offset=&quot;5&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w2&quot;&gt;is&lt;/wf&gt;
+    &lt;wf length=&quot;2&quot; offset=&quot;8&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w3&quot;&gt;an&lt;/wf&gt;
+    &lt;wf length=&quot;7&quot; offset=&quot;11&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w4&quot;&gt;english&lt;/wf&gt;
+    &lt;wf length=&quot;4&quot; offset=&quot;19&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w5&quot;&gt;text&lt;/wf&gt;
+  &lt;/text&gt;
+&lt;/KAF&gt;</pre>
     </p>
 
     <h2>Try the webservice</h2>
