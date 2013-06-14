@@ -4,7 +4,7 @@ module Opener
     # CLI wrapper around {Opener::Tokenizer} using OptionParser.
     #
     # @!attribute [r] options
-    #  @return [Struct]
+    #  @return [Hash]
     # @!attribute [r] option_parser
     #  @return [OptionParser]
     #
