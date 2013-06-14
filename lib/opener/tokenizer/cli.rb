@@ -43,6 +43,11 @@ module Opener
 
           opts.separator <<-EOF
 
+Examples:
+
+  cat example.txt | #{opts.program_name} -l en # Manually specify the language
+  cat example.kaf | #{opts.program_name}       # Uses the xml:lang attribute
+
 Languages:
 
   * Dutch (nl)
