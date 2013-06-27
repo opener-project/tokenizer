@@ -16,6 +16,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'opener-tokenizer-base'
   gem.add_dependency 'opener-tokenizer-fr'
+  gem.add_dependency 'opener-webservice'
 
   gem.add_dependency 'nokogiri'
   gem.add_dependency 'builder', '~>3.1'
