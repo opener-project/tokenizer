@@ -15,7 +15,6 @@ Gem::Specification.new do |gem|
   gem.test_files  = gem.files.grep(%r{^(test|spec|features)/})
 
   gem.add_dependency 'opener-tokenizer-base', '>= 0.2.0'
-  gem.add_dependency 'opener-tokenizer-fr'
   gem.add_dependency 'opener-webservice'
 
   gem.add_dependency 'nokogiri'
