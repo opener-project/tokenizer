@@ -60,8 +60,8 @@ Will result in
     <KAF version="v1.opener" xml:lang="en">
       <kafHeader>
         <linguisticProcessors layer="text">
-          <lp name="opennlp-en-tok" timestamp="2013-06-11T13:42:27Z" version="1.0"/>
-          <lp name="opennlp-en-sent" timestamp="2013-06-11T13:42:27Z" version="1.0"/>
+          <lp name="opener-sentence-splitter-en" timestamp="2013-05-31T11:39:31Z" version="0.0.1"/>
+          <lp name="opener-tokenizer-en" timestamp="2013-05-31T11:39:32Z" version="1.0.1"/>
         </linguisticProcessors>
       </kafHeader>
       <text>
@@ -86,8 +86,8 @@ Will result in
     <KAF version="v1.opener" xml:lang="en">
       <kafHeader>
         <linguisticProcessors layer="text">
-          <lp name="opennlp-en-tok" timestamp="2013-06-11T13:41:37Z" version="1.0"/>
-          <lp name="opennlp-en-sent" timestamp="2013-06-11T13:41:37Z" version="1.0"/>
+          <lp name="opener-sentence-splitter-en" timestamp="2013-05-31T11:39:31Z" version="0.0.1"/>
+          <lp name="opener-tokenizer-en" timestamp="2013-05-31T11:39:32Z" version="1.0.1"/>
         </linguisticProcessors>
       </kafHeader>
       <text>
