@@ -1,5 +1,4 @@
 require 'opener/tokenizers/base'
-require 'opener/tokenizers/fr'
 require 'nokogiri'
 require 'open3'
 require 'optparse'
