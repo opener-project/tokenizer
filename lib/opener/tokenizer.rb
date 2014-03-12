@@ -31,7 +31,7 @@ module Opener
     #
     DEFAULT_OPTIONS = {
       :args     => [],
-      :kaf      => false,
+      :kaf      => true,
       :language => DEFAULT_LANGUAGE
     }.freeze
 
@@ -57,10 +57,11 @@ module Opener
     # @return [Array]
     #
     def run(input)
-      language = options[:language]
 
       if options[:kaf]
         language, input = kaf_elements(input)
+      else
+        language = options[:language]
       end
 
       unless valid_language?(language)
@@ -69,7 +70,7 @@ module Opener
 
       kernel = language_constant(language).new(:args => options[:args])
 
-      return Open3.capture3(kernel.command, :stdin_data => input)
+      return Open3.capture3(*kernel.command.split(" "), :stdin_data => input)
     end
 
     alias tokenize run
