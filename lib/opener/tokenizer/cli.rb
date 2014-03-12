@@ -35,10 +35,15 @@ module Opener
             'Uses this specific language'
           ) do |value|
             @options[:language] = value
+            @options[:kaf] = false
           end
 
           opts.on('-k', '--kaf', 'Treats the input as a KAF document') do
             @options[:kaf] = true
+          end
+
+          opts.on('-p', '--plain', 'Treats the input as plain text') do
+            @options[:kaf] = false
           end
 
           opts.separator <<-EOF
