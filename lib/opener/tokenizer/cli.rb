@@ -42,7 +42,7 @@ module Opener
             @options[:kaf] = true
           end
 
-          opts.on('-p', '--plain', 'Treats the input as plain text (default)') do
+          opts.on('-p', '--plain', 'Treats the input as plain text') do
             @options[:kaf] = false
           end
 

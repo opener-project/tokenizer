@@ -31,7 +31,7 @@ module Opener
     #
     DEFAULT_OPTIONS = {
       :args     => [],
-      :kaf      => false,
+      :kaf      => true,
       :language => DEFAULT_LANGUAGE
     }.freeze
 
