@@ -53,7 +53,8 @@ Will result in
 
 #### KAF input format
 
-The tokenizer is capable of taking KAF as input. You can do so like this:
+The tokenizer is capable of taking KAF as input, and actually does so by
+default. You can do so like this:
 
     echo "<?xml version='1.0' encoding='UTF-8' standalone='no'?><KAF version='v1.opener' xml:lang='en'><raw>This is what I call, a test!</raw></KAF>" | tokenizer
 
