@@ -92,7 +92,7 @@ These daemons make use of Amazon SQS queues and other Amazon services.
 The access to these services and other environment variables can be configured
 using a .opener-daemons-env file in the home directory of the current user.
 
-It is also possible to provide the environment variables directly to the deamon.
+It is also possible to provide the environment variables directly to the daemon.
 
 For example:
 
