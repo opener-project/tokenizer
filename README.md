@@ -25,7 +25,7 @@ output KAF by default.
 ### Command line interface
 
 You should now be able to call the tokenizer as a regular shell
-command: by its name. Once installed the gem normalyl sits in your path so you can call it directly from anywhere.
+command: by its name. Once installed the gem normally sits in your path so you can call it directly from anywhere.
 
 Tokenizing some text:
 
@@ -119,7 +119,7 @@ Website)[http://opener-project.github.io/getting-started/how-to/local-installati
 
 At least you need the following system setup:
 
-### Depenencies for normal use:
+### Dependencies for normal use:
 
 * Perl 5
 * MRI 1.9.3
@@ -132,20 +132,19 @@ At least you need the following system setup:
 Language Extension
 ------------------
 
-  TODO
+The tokenizer module is a wrapping around a Perl script, which performs the actual tokenization based on rules (when to break a character sequence). The tokenizer already supports a lot of languages. Have a look to the core script to figure out how to extend to new languages.
 
 The Core
 --------
 
-The component is a fat wrapper around the actual language technology core. You
-can find the core technolies in the following repositories:
+The component is a fat wrapper around the actual language technology core. The core is a rule based tokenizer implemented in Perl. You can find the core technologies in the following repositories:
 
 * (tokenizer-base)[http://github.com/opener-project/tokenizer-base]
 
 Where to go from here
 ---------------------
 
-* Check (the project websitere)[http://opener-project.github.io]
+* Check (the project website)[http://opener-project.github.io]
 * (Checkout the webservice)[http://opener.olery.com/tokenizer]
 
 Report problem/Get help
