@@ -29,10 +29,11 @@ tokenizer-server
 After launching the server, you can reach the webservice at
 <http://localhost:9292>.
 
-The webservice takes several options that get passed along to (Puma)[http://puma.io], the
+The webservice takes several options that get passed along to [Puma](http://puma.io), the
 webserver used by the component. The options are:
 
-```
+
+
     -b, --bind URI                   URI to bind to (tcp://, unix://, ssl://)
     -C, --config PATH                Load PATH as a config file
         --control URL                The bind url to use for the control server
@@ -58,18 +59,18 @@ webserver used by the component. The options are:
     -w, --workers COUNT              Activate cluster mode: How many worker processes to create
         --tag NAME                   Additional text to display in process listing
     -h, --help                       Show help
-```
+
 
 
 ### Daemon
 
 The daemon has the default OpeNER daemon options. Being:
 
-```
-Usage: tokenizer-daemon <start|stop|restart> [options]
+    Usage: tokenizer-daemon <start|stop|restart> [options]
 
 When calling tokenizer without <start|stop|restart> the daemon will start as a foreground process
 
+~~~~
 Daemon options:
     -i, --input QUEUE_NAME           Input queue name
     -o, --output QUEUE_NAME          Output queue name
@@ -84,7 +85,7 @@ Daemon options:
         --pidpath DIRNAME            Directory where to put the PID file. Is Overwritten by --pid if that option is present
         --debug                      Turn on debug log level
         --relentless                 Be relentless, fail fast, fail hard, do not continue processing when encountering component errors
-```
+~~~~
 
 #### Environment Variables
 
