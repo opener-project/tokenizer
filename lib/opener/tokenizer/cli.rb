@@ -46,6 +46,14 @@ module Opener
             @options[:kaf] = false
           end
 
+          opts.on(
+            '-f',
+            '--file [VALUE]',
+            '(optional) input file'
+          ) do |value|
+            @options[:file] = value
+          end
+
           opts.separator <<-EOF
 
 Examples:
