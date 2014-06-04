@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    opener-tokenizer (1.0.2)
+    opener-tokenizer (1.0.5)
       httpclient
       nokogiri
       opener-daemons
