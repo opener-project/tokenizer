@@ -21,7 +21,7 @@ Gem::Specification.new do |gem|
 
   gem.executables = Dir.glob('bin/*').map { |file| File.basename(file) }
 
-  gem.add_dependency 'opener-tokenizer-base', '>= 0.3.1'
+  gem.add_dependency 'opener-tokenizer-base', '>= 1.0.5'
   gem.add_dependency 'opener-webservice'
 
   gem.add_dependency 'nokogiri'
