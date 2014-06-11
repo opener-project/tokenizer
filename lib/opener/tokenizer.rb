@@ -64,7 +64,11 @@ module Opener
         else
           language = options[:language]
         end
-      
+        
+        unless valid_language?(language)
+          raise ArgumentError, "The specified language (#{language}) is invalid"
+        end
+        
         kernel = language_constant(language).new(:args => options[:args])
 
         return Open3.capture3(*kernel.command.split(" "), :stdin_data => input)
