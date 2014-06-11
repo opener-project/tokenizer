@@ -70,8 +70,11 @@ module Opener
         end
         
         kernel = language_constant(language).new(:args => options[:args])
-
-        return Open3.capture3(*kernel.command.split(" "), :stdin_data => input)
+        
+        stdout, stderr, process = Open3.capture3(*kernel.command.split(" "), :stdin_data => input)
+        raise stderr unless process.success?
+        return stdout
+        
       rescue Exception => error
         return ErrorLayer.new(input, error.message, self.class).add
       end
