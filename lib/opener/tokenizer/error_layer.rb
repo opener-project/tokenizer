@@ -26,7 +26,9 @@ module Opener
         end
         add_error
         
-        return document.to_xml(:encoding => "UTF-8")
+        xml = !!document.encoding ? document.to_xml : document.to_xml(:encoding => "UTF-8")
+        
+        return xml
       end
       
       ##
