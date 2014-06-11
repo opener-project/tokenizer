@@ -5,6 +5,7 @@ require 'optparse'
 
 require_relative 'tokenizer/version'
 require_relative 'tokenizer/cli'
+require_relative 'tokenizer/error_layer'
 
 module Opener
   ##
@@ -57,20 +58,19 @@ module Opener
     # @return [Array]
     #
     def run(input)
+      begin
+        if options[:kaf]
+          language, input = kaf_elements(input)
+        else
+          language = options[:language]
+        end
+      
+        kernel = language_constant(language).new(:args => options[:args])
 
-      if options[:kaf]
-        language, input = kaf_elements(input)
-      else
-        language = options[:language]
+        return Open3.capture3(*kernel.command.split(" "), :stdin_data => input)
+      rescue Exception => error
+        return ErrorLayer.new(input, error.message, self.class).add
       end
-
-      unless valid_language?(language)
-        raise ArgumentError, "The specified language (#{language}) is invalid"
-      end
-
-      kernel = language_constant(language).new(:args => options[:args])
-
-      return Open3.capture3(*kernel.command.split(" "), :stdin_data => input)
     end
 
     alias tokenize run

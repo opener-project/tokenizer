@@ -88,13 +88,7 @@ Sample KAF syntax:
 
         stdout, stderr, process = tokenizer.run(input)
 
-        if process.success?
-          puts stdout
-
-          STDERR.puts(stderr) unless stderr.empty?
-        else
-          abort stderr
-        end
+        puts stdout
       end
 
       private
