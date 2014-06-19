@@ -5,7 +5,6 @@ require 'optparse'
 
 require_relative 'tokenizer/version'
 require_relative 'tokenizer/cli'
-require_relative 'tokenizer/error_layer'
 
 module Opener
   ##
@@ -76,7 +75,7 @@ module Opener
         return stdout
         
       rescue Exception => error
-        return ErrorLayer.new(input, error.message, self.class).add
+        return Opener::Core::ErrorLayer.new(input, error.message, self.class).add
       end
     end
 
