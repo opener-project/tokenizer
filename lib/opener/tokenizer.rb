@@ -2,6 +2,7 @@ require 'opener/tokenizers/base'
 require 'nokogiri'
 require 'open3'
 require 'optparse'
+require 'opener/core'
 
 require_relative 'tokenizer/version'
 require_relative 'tokenizer/cli'
