@@ -2,7 +2,6 @@ require 'opener/tokenizers/base'
 require 'nokogiri'
 require 'open3'
 require 'optparse'
-require 'opener/core'
 
 require_relative 'tokenizer/version'
 require_relative 'tokenizer/cli'
@@ -41,8 +40,10 @@ module Opener
     #
     # @option options [Array] :args Collection of arbitrary arguments to pass
     #  to the individual tokenizer commands.
+    #
     # @option options [String] :language The language to use for the
     #  tokenization process.
+    #
     # @option options [TrueClass|FalseClass] :kaf When set to `true` the input
     #  is assumed to be KAF.
     #
@@ -64,19 +65,21 @@ module Opener
         else
           language = options[:language]
         end
-        
+
         unless valid_language?(language)
           raise ArgumentError, "The specified language (#{language}) is invalid"
         end
-        
+
         kernel = language_constant(language).new(:args => options[:args])
-        
-        stdout, stderr, process = Open3.capture3(*kernel.command.split(" "), :stdin_data => input)
+
+        stdout, stderr, process = Open3.capture3(
+          *kernel.command.split(" "),
+          :stdin_data => input
+        )
+
         raise stderr unless process.success?
+
         return stdout
-        
-      rescue Exception => error
-        return Opener::Core::ErrorLayer.new(input, error.message, self.class).add
       end
     end
 

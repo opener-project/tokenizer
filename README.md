@@ -1,11 +1,15 @@
 Introduction
 ------------
 
-The tokenizer tokenizes a text into sentences and words. 
+The tokenizer tokenizes a text into sentences and words.
 
 ### Confused by some terminology?
 
-This software is part of a larger collection of natural language processing tools known as "the OpeNER project". You can find more information about the project at [the OpeNER portal](http://opener-project.github.io). There you can also find references to terms like KAF (an XML standard to represent linguistic annotations in texts), component, cores, scenario's and pipelines.
+This software is part of a larger collection of natural language processing
+tools known as "the OpeNER project". You can find more information about the
+project at [the OpeNER portal](http://opener-project.github.io). There you can
+also find references to terms like KAF (an XML standard to represent linguistic
+annotations in texts), component, cores, scenario's and pipelines.
 
 Quick Use Example
 -----------------
@@ -20,13 +24,14 @@ output KAF by default.
 
 ### Command line interface
 
-You should now be able to call the tokenizer as a regular shell
-command: by its name. Once installed the gem normally sits in your path so you can call it directly from anywhere.
+You should now be able to call the tokenizer as a regular shell command: by its
+name. Once installed the gem normally sits in your path so you can call it
+directly from anywhere.
 
 Tokenizing some text:
 
     echo "This is English text" | tokenizer -l en --no-kaf
-    
+
 Will result in
 
     <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -45,11 +50,13 @@ Will result in
       </text>
     </KAF>
 
-  The available languages for tokenization are: English (en), German (de), Dutch (nl), French (fr), Spanish (es), Italian (it)
+The available languages for tokenization are: English (en), German (de), Dutch
+(nl), French (fr), Spanish (es), Italian (it)
 
 #### KAF input format
 
-The tokenizer is capable of taking KAF as input, and actually does so by default. You can do so like this:
+The tokenizer is capable of taking KAF as input, and actually does so by
+default. You can do so like this:
 
     echo "<?xml version='1.0' encoding='UTF-8' standalone='no'?><KAF version='v1.opener' xml:lang='en'><raw>This is what I call, a test!</raw></KAF>" | tokenizer
 
@@ -72,7 +79,8 @@ Will result in
       </text>
     </KAF>
 
-If the argument -k (--kaf) is passed, then the argument -l (--language) is ignored.
+If the argument -k (--kaf) is passed, then the argument -l (--language) is
+ignored.
 
 ### Webservices
 
@@ -80,7 +88,8 @@ You can launch a language identification webservice by executing:
 
     tokenizer-server
 
-This will launch a mini webserver with the webservice. It defaults to port 9292, so you can access it at <http://localhost:9292>.
+This will launch a mini webserver with the webservice. It defaults to port 9292,
+so you can access it at <http://localhost:9292>.
 
 To launch it on a different port provide the `-p [port-number]` option like this:
 
@@ -88,19 +97,25 @@ To launch it on a different port provide the `-p [port-number]` option like this
 
 It then launches at <http://localhost:1234>
 
-Documentation on the Webservice is provided by surfing to the urls provided above. For more information on how to launch a webservice run the command with the ```-h``` option.
+Documentation on the Webservice is provided by surfing to the urls provided
+above. For more information on how to launch a webservice run the command with
+the `--help` option.
 
 
 ### Daemon
 
-Last but not least the tokenizer comes shipped with a daemon that can read jobs (and write) jobs to and from Amazon SQS queues. For more information type:
+Last but not least the tokenizer comes shipped with a daemon that can read jobs
+(and write) jobs to and from Amazon SQS queues. For more information type:
 
-    tokenizer-daemon -h
+    tokenizer-daemon --help
 
 Description of dependencies
 ---------------------------
 
-This component runs best if you run it in an environment suited for OpeNER components. You can find an installation guide and helper tools in the [OpeNER installer](https://github.com/opener-project/opener-installer) and [an installation guide on the Opener Website](http://opener-project.github.io/getting-started/how-to/local-installation.html)
+This component runs best if you run it in an environment suited for OpeNER
+components. You can find an installation guide and helper tools in the
+[OpeNER installer](https://github.com/opener-project/opener-installer) and
+[an installation guide on the Opener Website](http://opener-project.github.io/getting-started/how-to/local-installation.html).
 
 At least you need the following system setup:
 
@@ -113,16 +128,20 @@ At least you need the following system setup:
 
 * Maven (for building the Gem)
 
-
 Language Extension
 ------------------
 
-The tokenizer module is a wrapping around a Perl script, which performs the actual tokenization based on rules (when to break a character sequence). The tokenizer already supports a lot of languages. Have a look to the core script to figure out how to extend to new languages.
+The tokenizer module is a wrapping around a Perl script, which performs the
+actual tokenization based on rules (when to break a character sequence). The
+tokenizer already supports a lot of languages. Have a look to the core script to
+figure out how to extend to new languages.
 
 The Core
 --------
 
-The component is a fat wrapper around the actual language technology core. The core is a rule based tokenizer implemented in Perl. You can find the core technologies in the following repositories:
+The component is a fat wrapper around the actual language technology core. The
+core is a rule based tokenizer implemented in Perl. You can find the core
+technologies in the following repositories:
 
 * [tokenizer-base](http://github.com/opener-project/tokenizer-base)
 
@@ -135,9 +154,8 @@ Where to go from here
 Report problem/Get help
 -----------------------
 
-If you encounter problems, please email <support@opener-project.eu> or leave an issue in the 
-[issue tracker](https://github.com/opener-project/tokenizer/issues).
-
+If you encounter problems, please email <support@opener-project.eu> or leave an
+issue in the [issue tracker](https://github.com/opener-project/tokenizer/issues).
 
 Contributing
 ------------
