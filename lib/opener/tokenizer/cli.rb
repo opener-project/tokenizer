@@ -1,110 +1,92 @@
 module Opener
   class Tokenizer
     ##
-    # CLI wrapper around {Opener::Tokenizer} using OptionParser.
+    # CLI wrapper around {Opener::Tokenizer} using Slop.
     #
-    # @!attribute [r] options
-    #  @return [Hash]
-    # @!attribute [r] option_parser
-    #  @return [OptionParser]
+    # @!attribute [r] parser
+    #  @return [Slop]
     #
     class CLI
-      attr_reader :options, :option_parser
+      attr_reader :parser
+
+      def initialize
+        @parser = configure_slop
+      end
 
       ##
-      # @param [Hash] options
+      # @param [Array] argv
       #
-      def initialize(options = {})
-        @options = DEFAULT_OPTIONS.merge(options)
+      def run(argv = ARGV)
+        parser.parse(argv)
+      end
 
-        @option_parser = OptionParser.new do |opts|
-          opts.program_name   = 'tokenizer'
-          opts.summary_indent = '  '
+      ##
+      # @return [Slop]
+      #
+      def configure_slop
+        return Slop.new(:strict => false, :indent => 2, :help => true) do
+          banner 'Usage: tokenizer [OPTIONS]'
 
-          opts.on('-h', '--help', 'Shows this help message') do
-            show_help
-          end
+          separator <<-EOF.chomp
 
-          opts.on('-v', '--version', 'Shows the current version') do
-            show_version
-          end
+About:
 
-          opts.on(
-            '-l',
-            '--language [VALUE]',
-            'Uses this specific language'
-          ) do |value|
-            @options[:language] = value
-            @options[:kaf] = false
-          end
-
-          opts.on('-k', '--kaf', 'Treats the input as a KAF document') do
-            @options[:kaf] = true
-          end
-
-          opts.on('-p', '--plain', 'Treats the input as plain text') do
-            @options[:kaf] = false
-          end
-
-          opts.separator <<-EOF
+    Tokenizer for KAF/plain text documents with support for various languages
+    such as Dutch and English. This command reads input from STDIN.
 
 Examples:
 
-  cat example.txt | #{opts.program_name} -l en # Manually specify the language
-  cat example.kaf | #{opts.program_name}       # Uses the xml:lang attribute
+    cat example.txt | tokenizer -l en # Manually specify the language
+    cat example.kaf | tokenizer       # Uses the xml:lang attribute
 
 Languages:
 
-  * Dutch (nl)
-  * English (en)
-  * French (fr)
-  * German (de)
-  * Italian (it)
-  * Spanish (es)
+    * Dutch (nl)
+    * English (en)
+    * French (fr)
+    * German (de)
+    * Italian (it)
+    * Spanish (es)
 
 KAF Input:
 
-  If you give a KAF file as an input (-k or --kaf) the language is taken from
-  the xml:lang attribute inside the file. Else it expects that you give the
-  language as an argument (-l or --language)
+    If you give a KAF file as an input (-k or --kaf) the language is taken from
+    the xml:lang attribute inside the file. Else it expects that you give the
+    language as an argument (-l or --language)
 
-Sample KAF syntax:
+Example KAF:
 
-  <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-  <KAF version="v1.opener" xml:lang="en">
-    <raw>This is some text.</raw>
-  </KAF>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <KAF version="v1.opener" xml:lang="en">
+      <raw>This is some text.</raw>
+    </KAF>
           EOF
+
+          separator "\nOptions:\n"
+
+          on :v, :version, 'Shows the current version' do
+            abort "tokenizer v#{VERSION} on #{RUBY_DESCRIPTION}"
+          end
+
+          on :l=, :language=, 'A specific language to use',
+            :as      => String,
+            :default => DEFAULT_LANGUAGE
+
+          on :k, :kaf, 'Treats the input as a KAF document'
+          on :p, :plain, 'Treats the input as plain text'
+
+          run do |opts, args|
+            tokenizer = Tokenizer.new(
+              :args     => args,
+              :kaf      => opts[:plain] ? false : true,
+              :language => opts[:language]
+            )
+
+            input = STDIN.tty? ? nil : STDIN.read
+
+            puts tokenizer.run(input)
+          end
         end
-      end
-
-      ##
-      # @param [String] input
-      #
-      def run(input)
-        option_parser.parse!(options[:args])
-
-        tokenizer = Tokenizer.new(options)
-
-        stdout, stderr, process = tokenizer.run(input)
-
-        puts stdout
-      end
-
-      private
-
-      ##
-      # Shows the help message and exits the program.
-      #
-      def show_help
-        abort option_parser.to_s
-      end
-
-      ##
-      # Shows the version and exits the program.
-      #
-      def show_version
-        abort "#{option_parser.program_name} v#{VERSION} on #{RUBY_DESCRIPTION}"
       end
     end # CLI
   end # Tokenizer

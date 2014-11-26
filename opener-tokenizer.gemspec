@@ -24,11 +24,13 @@ Gem::Specification.new do |gem|
 
   gem.executables = Dir.glob('bin/*').map { |file| File.basename(file) }
 
-  gem.add_dependency 'nokogiri'
   gem.add_dependency 'opener-tokenizer-base', '~> 1.0'
   gem.add_dependency 'opener-webservice', '~> 2.1'
   gem.add_dependency 'opener-daemons', '~> 2.1'
   gem.add_dependency 'opener-core', '~> 2.0'
+
+  gem.add_dependency 'nokogiri'
+  gem.add_dependency 'slop', '~> 3.5'
 
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'cucumber'

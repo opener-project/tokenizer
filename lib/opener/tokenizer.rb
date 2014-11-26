@@ -1,7 +1,7 @@
 require 'opener/tokenizers/base'
 require 'nokogiri'
 require 'open3'
-require 'optparse'
+require 'slop'
 
 require_relative 'tokenizer/version'
 require_relative 'tokenizer/cli'
@@ -52,35 +52,32 @@ module Opener
     end
 
     ##
-    # Processes the input and returns an array containing the output of STDOUT,
-    # STDERR and an object containing process information.
+    # Tokenizes the input and returns the results as a KAF document.
     #
     # @param [String] input
-    # @return [Array]
+    # @return [String]
     #
     def run(input)
-      begin
-        if options[:kaf]
-          language, input = kaf_elements(input)
-        else
-          language = options[:language]
-        end
-
-        unless valid_language?(language)
-          raise ArgumentError, "The specified language (#{language}) is invalid"
-        end
-
-        kernel = language_constant(language).new(:args => options[:args])
-
-        stdout, stderr, process = Open3.capture3(
-          *kernel.command.split(" "),
-          :stdin_data => input
-        )
-
-        raise stderr unless process.success?
-
-        return stdout
+      if options[:kaf]
+        language, input = kaf_elements(input)
+      else
+        language = options[:language]
       end
+
+      unless valid_language?(language)
+        raise ArgumentError, "The specified language (#{language}) is invalid"
+      end
+
+      kernel = language_constant(language).new(:args => options[:args])
+
+      stdout, stderr, process = Open3.capture3(
+        *kernel.command.split(" "),
+        :stdin_data => input
+      )
+
+      raise stderr unless process.success?
+
+      return stdout
     end
 
     alias tokenize run
