@@ -1,6 +1,8 @@
+require 'open3'
+
+require 'opener/core'
 require 'opener/tokenizers/base'
 require 'nokogiri'
-require 'open3'
 require 'slop'
 
 require_relative 'tokenizer/version'
@@ -65,7 +67,7 @@ module Opener
       end
 
       unless valid_language?(language)
-        raise ArgumentError, "The specified language (#{language}) is invalid"
+        raise Core::UnsupportedLanguageError, language
       end
 
       kernel = language_constant(language).new(:args => options[:args])
@@ -82,8 +84,6 @@ module Opener
 
     alias tokenize run
 
-    private
-
     ##
     # Returns an Array containing the language an input from a KAF document.
     #
@@ -97,6 +97,8 @@ module Opener
 
       return language, text
     end
+
+    private
 
     ##
     # @param [String] language
