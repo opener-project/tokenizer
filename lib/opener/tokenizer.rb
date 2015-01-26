@@ -105,14 +105,18 @@ module Opener
     # @return [Class]
     #
     def language_constant(language)
-      Opener::Tokenizers.const_get(language.upcase)
+      name = Core::LanguageCode.constant_name(language)
+
+      Tokenizers.const_get(name)
     end
 
     ##
     # @return [TrueClass|FalseClass]
     #
     def valid_language?(language)
-      return Opener::Tokenizers.const_defined?(language.upcase)
+      name = Core::LanguageCode.constant_name(language)
+
+      return Tokenizers.const_defined?(name)
     end
   end # Tokenizer
 end # Opener
