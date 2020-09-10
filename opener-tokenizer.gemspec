@@ -7,7 +7,6 @@ Gem::Specification.new do |gem|
   gem.summary     = 'Gem that wraps up the the tokenizer cores'
   gem.description = gem.summary
   gem.homepage    = 'http://opener-project.github.com/'
-  gem.has_rdoc    = "yard"
 
   gem.license = 'Apache 2.0'
 
@@ -23,8 +22,6 @@ Gem::Specification.new do |gem|
   ]).select { |file| File.file?(file) }
 
   gem.executables = Dir.glob('bin/*').map { |file| File.basename(file) }
-
-  gem.add_dependency 'newrelic_rpm', '~> 3.0'
 
   gem.add_dependency 'opener-tokenizer-base', '~> 1.0'
   gem.add_dependency 'opener-webservice', '~> 2.1'
