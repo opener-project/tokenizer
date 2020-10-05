@@ -59,7 +59,7 @@ module Opener
     # @param [String] input
     # @return [String]
     #
-    def run(input)
+    def run input, params = {}
       if options[:kaf]
         language, input = kaf_elements(input)
       else
